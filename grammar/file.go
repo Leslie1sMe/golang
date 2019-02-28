@@ -3,6 +3,12 @@ package main
 
 //输入流:数据从数据源（文件）到程序（内存）的路径
 //输出流:数据从程序（内存）到数据源（文件）的路径
+type countType struct {
+	spaceNum int
+	wordNum  int
+	num int
+	otherNum int
+}
 
 func main() {
 	//1. 打开文件
@@ -80,7 +86,7 @@ func main() {
 	//file.Close()
 	//7.打开一个存在的文件，将原来的内容读出在终端，然后追加123....
 	//file, error := os.OpenFile("/Users/leslie/go/src/go_code/grammar/test.txt", os.O_RDONLY|os.O_APPEND|os.O_WRONLY, 660)
-	//if error != nil {
+	//if error == io.EOF {
 	//	log.Fatal(error)
 	//}
 	//reader:=bufio.NewReader(file)
@@ -89,4 +95,77 @@ func main() {
 	//writer.WriteString("123131313")
 	//writer.Flush()
 	//file.Close()
+	//8. 两个文件，将一个文件的内容写到另一个文件当中去
+	//file := "/Users/leslie/go/src/go_code/grammar/test.txt"
+	//reader, error := ioutil.ReadFile(file)
+	//if error != nil {
+	//	log.Fatal(error)
+	//}
+	//file1 := "/Users/leslie/go/src/go_code/grammar/test1.txt"
+	//ioutil.WriteFile(file1,reader,660)
+	//9. 判断文件是否存在
+	//fileInfo,error:=os.Stat("/Users/leslie/go/src/go_code/grammar/te2st.txt")
+	//if error != nil {
+	//	if os.IsNotExits(error){
+	//return false
+	//}else{
+	// return true
+	// }
+	//}
+	//fmt.Println(fileInfo)
+	//10.文件copy
+	//src, error := os.Open("/Users/leslie/Downloads/cpts_1638_dlq/images/2.jpg")
+	//if error != nil {
+	//	log.Fatal(error)
+	//}
+	//file := bufio.NewReader(src)
+	//defer src.Close()
+	//dest := "/Users/leslie/go/src/go_code/grammar/golang.jpg"
+	//file2, error := os.OpenFile(dest, os.O_CREATE|os.O_WRONLY, 0660)
+	//if error != nil {
+	//	log.Fatal(error)
+	//}
+	//descFile := bufio.NewWriter(file2)
+	//defer file2.Close()
+	//res, error := io.Copy(descFile, file)
+	//if error !=nil {
+	//	log.Fatal(error)
+	//}
+	//fmt.Println(res)
+	//11.统计一下英文数字空格等的个数
+	//filename := "/Users/leslie/go/src/go_code/grammar/test.txt"
+	//file, error := os.Open(filename)
+	//if error != nil {
+	//	log.Fatal(error)
+	//}
+	//reader := bufio.NewReader(file)
+	//var fileType countType
+	//for {
+	//	str, error := reader.ReadString('\n')
+	//	if error == io.EOF {
+	//		break
+	//	}
+	//
+	//	for _, v := range str {
+	//
+	//		switch {
+	//		case v >= 'a' && v <= 'z':
+	//			fallthrough
+	//		case v >='A' && v <= 'Z':
+	//			fileType.wordNum++
+	//		case v == ' ' || v == '\t':
+	//			fileType.spaceNum++
+	//		case v >= '1' && v <= '9':
+	//			fileType.num++
+	//		default:
+	//			fileType.otherNum++
+	//
+	//		}
+	//	}
+	//}
+	//fmt.Printf("字母个数=%v 空格个数=%v 数字个数=%v 其他个数=%v",fileType.wordNum,fileType.spaceNum,fileType.num,fileType.otherNum)
+
 }
+
+
+
