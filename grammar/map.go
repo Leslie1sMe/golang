@@ -1,3 +1,4 @@
+//map引用类型
 package main
 
 func main() {
@@ -46,6 +47,15 @@ func main() {
 	//fmt.Println(test)
 	//test["age"] = "80"
 	//fmt.Println(test)
+	//map切片
+	//var slice [] map[string]string
+	//slice = make([]map[string]string,1)
+	//test := make(map[string]string)
+	//test["name"] = "LiMing"
+	//test["age"] = "19"
+	//fmt.Println(test)
+	//slice = append(slice,test)
+	//fmt.Println(slice)
 
 
 }
