@@ -25,9 +25,7 @@ type Struct struct {
 	Hobby  [3] float64
 	Friend map[string]string
 }
-type UserController struct {
 
-}
 
 func main() {
 	//user := User{
@@ -94,9 +92,9 @@ func main() {
 	//fmt.Println(person)
 
 
-
 }
+
+
 
 //test()和UserController绑定
 //test()只能由UserController类型的变量调用
-
