@@ -9,6 +9,9 @@
         6.golang中定义方法需要注意的地方                     ---method.go
         7.golang实现工厂模式                               ---factory.go
         8.golang实现继承                                   ---extends.go
+        9.golang实现接口                                   ---interface.go
+        10.golang接口练习                                   ---interfaceTest.go
+        11.golang实现接口和继承的关系                                   ---interfaceTest.go
 ### `2.advanced`
         1.项目实战
                 1）用户信息管理系统
