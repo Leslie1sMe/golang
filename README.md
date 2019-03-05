@@ -11,7 +11,8 @@
         8.golang实现继承                                   ---extends.go
         9.golang实现接口                                   ---interface.go
         10.golang接口练习                                   ---interfaceTest.go
-        11.golang实现接口和继承的关系                                   ---interfaceTest.go
+        11.golang实现接口和继承的关系                         ---interfaceTest.go
+        12.golang实现类型断言                               ---assert.go
 ### `2.advanced`
         1.项目实战
                 1）用户信息管理系统
