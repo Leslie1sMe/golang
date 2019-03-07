@@ -13,6 +13,9 @@
         10.golang接口练习                                   ---interfaceTest.go
         11.golang实现接口和继承的关系                         ---interfaceTest.go
         12.golang实现类型断言                               ---assert.go
+        13.golang实现操作mysql增删改除操作                    ---mysql.go
+        14.golang实现操作redis操作                           ---redis.go
+        15.golang操作http(待完善)                           ---http.go
 ### `2.advanced`
         1.项目实战
                 1）用户信息管理系统
