@@ -6,7 +6,7 @@ type Student struct {
 }
 
 //适用于结构体首字母小写的情况，可使用工厂模式
-func NewStudent(name string, age int) *Student {
+func New(name string, age int) *Student {
 	//return &Student{
 	//	Name: name,
 	//	Age:  age,
