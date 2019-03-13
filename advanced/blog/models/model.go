@@ -19,6 +19,7 @@ type Posts struct {
 	Author  string
 	Tags    string
 	Created string
+	Type    string
 }
 
 var db orm.Ormer
@@ -27,7 +28,7 @@ func init() {
 	orm.Debug = true
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	orm.RegisterDataBase("default", "mysql", "root:@tcp(127.0.0.1:3306)/golang?charset=utf8", 30)
-	orm.RegisterModel(new(Category))
+	orm.RegisterModel(new(Category), new(Posts))
 	db = orm.NewOrm()
 }
 
@@ -46,7 +47,13 @@ func GetArticles(Articles *[]Posts) {
 	if error != nil {
 		log.Fatal(error)
 	}
-	o.Select("title,info,author,tags,created").From("posts")
+	o.Select("id,title,info,author,tags,created").From("posts")
 	sql := o.String()
 	db.Raw(sql).QueryRows(Articles)
+}
+
+func GetArticle(Id int) (Post Posts, error error) {
+	var Article = Posts{Id: Id}
+	err := db.Read(&Article)
+	return Article, err
 }
