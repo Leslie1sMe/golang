@@ -15,10 +15,12 @@
         12.golang实现类型断言                               ---assert.go
         13.golang实现操作mysql增删改除操作                    ---mysql.go
         14.golang实现操作redis操作                           ---redis.go
-        15.golang操作http(待完善)                           ---http.go
+        15.golang操作http                                  ---http.go
+        16.golang操作goroutine添加互斥锁                   
 ### `2.advanced`
         1.项目实战
                 1）用户信息管理系统
                 2）个人收支记录软件
                 3）golang实现聊天室
                 4) golang实现博客
+                4) golang实现api操作，实现swagger文档输出以及默认model的curd操作

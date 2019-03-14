@@ -19,7 +19,6 @@ type Posts struct {
 	Author  string
 	Tags    string
 	Created string
-	Type    string
 }
 
 var db orm.Ormer
