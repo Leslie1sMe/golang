@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"runtime"
-	"strconv"
 	"time"
 )
 
@@ -23,24 +21,35 @@ func main() {
 	//WaitGroup.Wait()
 	//fmt.Println("Final Counter", counter)
 	//使用调度器
+	//
+	//go func() {
+	//	for x := 1; x < 100; x++ {
+	//		if x%10 == 0 {
+	//			runtime.Gosched() //使用Gosched()主动让出执行权
+	//		}
+	//		fmt.Println("routine1:" + strconv.Itoa(x))
+	//	}
+	//}()
+	//
+	//go func() {
+	//	for x := 100; x < 200; x++ {
+	//		fmt.Println("routine2:" + strconv.Itoa(x))
+	//	}
+	//}()
+	//
+	//time.Sleep(2 * time.Second)
 
-	go func() {
-		for x := 1; x < 100; x++ {
-			if x%10 == 0 {
-				runtime.Gosched() //使用Gosched()主动让出执行权
-			}
-			fmt.Println("routine1:" + strconv.Itoa(x))
-		}
-	}()
-
-	go func() {
-		for x := 100; x < 200; x++ {
-			fmt.Println("routine2:" + strconv.Itoa(x))
-		}
-	}()
-
+	go count()
 	time.Sleep(2 * time.Second)
-
+}
+func count() {
+	var count int
+	for x := 1; x < 10000000; x++ {
+		if x%2 == 0 {
+			count++
+		}
+	}
+	fmt.Println(count)
 }
 
 //func test(a int) {
