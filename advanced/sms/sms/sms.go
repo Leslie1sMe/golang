@@ -15,6 +15,7 @@ type SendParam struct {
 
 var Data map[string]string
 
+//发送短信
 func (s *SendParam) Send(phone string, message string) (*http.Response, error) {
 	values := url.Values{}
 	values.Add("mobile", phone)
@@ -38,6 +39,7 @@ func (s *SendParam) Send(phone string, message string) (*http.Response, error) {
 	return resp, err
 }
 
+//群发短信
 func (s *SendParam) SendBatch(mobileList []string, message string) (*http.Response, error) {
 	stringRes := strings.Join(mobileList, ",")
 	fmt.Println(stringRes)
@@ -63,6 +65,7 @@ func (s *SendParam) SendBatch(mobileList []string, message string) (*http.Respon
 	return resp, err
 }
 
+//查询余额
 func (s *SendParam) CheckDeposit() (string, error) {
 	request, err := http.NewRequest("GET", "http://sms-api.luosimao.com/v1/status.json", nil)
 	if err != nil {
