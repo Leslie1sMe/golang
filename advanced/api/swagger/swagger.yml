@@ -1,118 +1,158 @@
 swagger: "2.0"
 info:
-  title: beego Test API
-  description: beego has a very cool tools to autogenerate documents for your API
+  title: beego API
+  description: beego useful api demo
   version: 1.0.0
-  termsOfService: http://beego.me/
   contact:
-    email: astaxie@gmail.com
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    email: lizhonglin_melody@yeah.net
 basePath: /v1
 paths:
-  /object/:
-    get:
-      tags:
-      - object
-      description: get all objects
-      operationId: ObjectController.GetAll
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.Object'
-        "403":
-          description: :objectId is empty
+  /user/add:
     post:
       tags:
-      - object
-      description: create object
-      operationId: ObjectController.Create
+      - user
+      description: create user
+      operationId: UserController.Add A User
       parameters:
-      - in: body
-        name: body
-        description: The object content
-        required: true
-        schema:
-          $ref: '#/definitions/models.Object'
-      responses:
-        "200":
-          description: '{string} models.Object.Id'
-        "403":
-          description: body is empty
-  /object/{objectId}:
-    get:
-      tags:
-      - object
-      description: find object by objectid
-      operationId: ObjectController.Get
-      parameters:
-      - in: path
-        name: objectId
-        description: the objectid you want to get
-        required: true
+      - in: query
+        name: username
+        description: username
         type: string
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.Object'
-        "403":
-          description: :objectId is empty
-    put:
-      tags:
-      - object
-      description: update the object
-      operationId: ObjectController.Update
-      parameters:
-      - in: path
-        name: objectId
-        description: The objectid you want to update
-        required: true
+      - in: query
+        name: gender
+        description: gender
         type: string
-      - in: body
-        name: body
-        description: The body
-        required: true
-        schema:
-          $ref: '#/definitions/models.Object'
-      responses:
-        "200":
-          description: ""
-          schema:
-            $ref: '#/definitions/models.Object'
-        "403":
-          description: :objectId is empty
-    delete:
-      tags:
-      - object
-      description: delete the object
-      operationId: ObjectController.Delete
-      parameters:
-      - in: path
-        name: objectId
-        description: The objectId you want to delete
-        required: true
-        type: string
-      responses:
-        "200":
-          description: '{string} delete success!'
-        "403":
-          description: objectId is empty
-definitions:
-  models.Object:
-    title: Object
-    type: object
-    properties:
-      ObjectId:
-        type: string
-      PlayerName:
-        type: string
-      Score:
+      - in: query
+        name: age
+        description: age
         type: integer
         format: int64
-tags:
-- name: object
-  description: |
-    Operations about object
+      - in: query
+        name: address
+        description: address
+        type: string
+      - in: query
+        name: email
+        description: email
+        type: string
+      - in: query
+        name: phone
+        description: phone
+        type: string
+      responses:
+        "200":
+          description: '{string} uid'
+        "400":
+          description: '{error} err'
+  /user/all:
+    get:
+      tags:
+      - user
+      description: Get All The Users
+      operationId: UserController.Get All Users
+      responses:
+        "200":
+          description: ""
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/*Users'
+        "400":
+          description: '{error} err'
+  /user/delete:
+    get:
+      tags:
+      - user
+      description: Get  The Users
+      operationId: UserController.Delete One Users
+      parameters:
+      - in: query
+        name: uid
+        description: id
+        type: string
+      responses:
+        "200":
+          description: '{string} "delete success"'
+        "400":
+          description: '{error} err'
+  /user/login:
+    post:
+      tags:
+      - user
+      description: Get  The Users
+      operationId: UserController.Delete One Users
+      parameters:
+      - in: query
+        name: phone
+        description: phone
+        type: string
+      - in: query
+        name: code
+        description: "false"
+        type: string
+      responses:
+        "200":
+          description: '{string} "{\"status_code\":\"200\",\"message\":\"login success\"}"'
+        "400":
+          description: '{string} "{\"status_code\":\"400\",\"message\":\"login failed\"}"'
+  /user/one:
+    get:
+      tags:
+      - user
+      description: Get  The Users
+      operationId: UserController.Get One Users
+      parameters:
+      - in: query
+        name: uid
+        description: id
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/*Users'
+        "400":
+          description: '{error} err'
+  /user/update:
+    post:
+      tags:
+      - user
+      description: Update user
+      operationId: UserController.Update A User
+      parameters:
+      - in: query
+        name: uid
+        description: id
+        type: string
+      - in: query
+        name: username
+        description: username
+        type: string
+      - in: query
+        name: gender
+        description: gender
+        type: string
+      - in: query
+        name: age
+        description: age
+        type: integer
+        format: int64
+      - in: query
+        name: address
+        description: address
+        type: string
+      - in: query
+        name: email
+        description: email
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/*Users'
+        "400":
+          description: '{error} err'
+definitions:
+  '*Users':
+    title: '*Users'
+    type: object

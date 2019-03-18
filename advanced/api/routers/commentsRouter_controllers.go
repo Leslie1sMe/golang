@@ -1,50 +1,64 @@
 package routers
 
+import (
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/context/param"
+)
+
 func init() {
 
-	//beego.GlobalControllerRouter["api/controllers:ObjectController"] = append(beego.GlobalControllerRouter["api/controllers:ObjectController"],
-	//    beego.ControllerComments{
-	//        Method: "Post",
-	//        Router: `/`,
-	//        AllowHTTPMethods: []string{"post"},
-	//        MethodParams: param.Make(),
-	//        Filters: nil,
-	//        Params: nil})
-	//
-	//beego.GlobalControllerRouter["api/controllers:ObjectController"] = append(beego.GlobalControllerRouter["api/controllers:ObjectController"],
-	//    beego.ControllerComments{
-	//        Method: "GetAll",
-	//        Router: `/`,
-	//        AllowHTTPMethods: []string{"get"},
-	//        MethodParams: param.Make(),
-	//        Filters: nil,
-	//        Params: nil})
-	//
-	//beego.GlobalControllerRouter["api/controllers:ObjectController"] = append(beego.GlobalControllerRouter["api/controllers:ObjectController"],
-	//    beego.ControllerComments{
-	//        Method: "Get",
-	//        Router: `/:objectId`,
-	//        AllowHTTPMethods: []string{"get"},
-	//        MethodParams: param.Make(),
-	//        Filters: nil,
-	//        Params: nil})
-	//
-	//beego.GlobalControllerRouter["api/controllers:ObjectController"] = append(beego.GlobalControllerRouter["api/controllers:ObjectController"],
-	//    beego.ControllerComments{
-	//        Method: "Put",
-	//        Router: `/:objectId`,
-	//        AllowHTTPMethods: []string{"put"},
-	//        MethodParams: param.Make(),
-	//        Filters: nil,
-	//        Params: nil})
-	//
-	//beego.GlobalControllerRouter["api/controllers:ObjectController"] = append(beego.GlobalControllerRouter["api/controllers:ObjectController"],
-	//    beego.ControllerComments{
-	//        Method: "Delete",
-	//        Router: `/:objectId`,
-	//        AllowHTTPMethods: []string{"delete"},
-	//        MethodParams: param.Make(),
-	//        Filters: nil,
-	//        Params: nil})
+    beego.GlobalControllerRouter["api/controllers:UserController"] = append(beego.GlobalControllerRouter["api/controllers:UserController"],
+        beego.ControllerComments{
+            Method: "AddUser",
+            Router: `/add`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["api/controllers:UserController"] = append(beego.GlobalControllerRouter["api/controllers:UserController"],
+        beego.ControllerComments{
+            Method: "GetAllUsers",
+            Router: `/all`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["api/controllers:UserController"] = append(beego.GlobalControllerRouter["api/controllers:UserController"],
+        beego.ControllerComments{
+            Method: "DeleteUser",
+            Router: `/delete`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["api/controllers:UserController"] = append(beego.GlobalControllerRouter["api/controllers:UserController"],
+        beego.ControllerComments{
+            Method: "Login",
+            Router: `/login`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["api/controllers:UserController"] = append(beego.GlobalControllerRouter["api/controllers:UserController"],
+        beego.ControllerComments{
+            Method: "GetOneUser",
+            Router: `/one`,
+            AllowHTTPMethods: []string{"get"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
+
+    beego.GlobalControllerRouter["api/controllers:UserController"] = append(beego.GlobalControllerRouter["api/controllers:UserController"],
+        beego.ControllerComments{
+            Method: "UpdateUser",
+            Router: `/update`,
+            AllowHTTPMethods: []string{"post"},
+            MethodParams: param.Make(),
+            Filters: nil,
+            Params: nil})
 
 }

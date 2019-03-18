@@ -7,18 +7,14 @@ import (
 	"time"
 )
 
-var (
-	UserList map[string]*Users
-)
-
 type Users struct {
-	Id       string `orm:"unique;size(10);pk;column(id)"json:"id"`
-	Username string `orm:"size(10);column(username)"json:"username"`
-	Password string `orm:"unique;size(20);column(password)"json:"password"`
-	Gender   string `orm:"unique;size(10);default(null);column(gender)"json:"gender"`
-	Age      int    `orm:"unique;size(10);default(null);column(age)"json:"age"`
-	Address  string `orm:"unique;size(20);default(null);column(address)"json:"address"`
-	Email    string `orm:"unique;size(20);default(null);column(email)"json:"email"`
+	Id       string `orm:"unique;size(10);pk;column(id)"form:"id"`
+	Username string `orm:"size(10);column(username)"form:"username"`
+	Gender   string `orm:"unique;size(10);default(null);column(gender)"form:"gender"`
+	Age      int    `orm:"unique;size(10);default(null);column(age)"form:"age"`
+	Address  string `orm:"unique;size(20);default(null);column(address)"form:"address"`
+	Email    string `orm:"unique;size(50);default(null);column(email)"form:"email"`
+	Phone    string `orm:"unique;size(50);default(null);column(phone)"form:"phone"`
 }
 
 func init() {
@@ -35,52 +31,67 @@ func AddUser(u *Users) string {
 	return u.Id
 }
 
-//
-//func GetUser(uid string) (u *User, err error) {
-//	if u, ok := UserList[uid]; ok {
-//		return u, nil
-//	}
-//	return nil, errors.New("User not exists")
-//}
-//
-//func GetAllUsers() map[string]*User {
-//	return UserList
-//}
-//
-//func UpdateUser(uid string, uu *User) (a *User, err error) {
-//	if u, ok := UserList[uid]; ok {
-//		if uu.Username != "" {
-//			u.Username = uu.Username
-//		}
-//		if uu.Password != "" {
-//			u.Password = uu.Password
-//		}
-//		if uu.Profile.Age != 0 {
-//			u.Profile.Age = uu.Profile.Age
-//		}
-//		if uu.Profile.Address != "" {
-//			u.Profile.Address = uu.Profile.Address
-//		}
-//		if uu.Profile.Gender != "" {
-//			u.Profile.Gender = uu.Profile.Gender
-//		}
-//		if uu.Profile.Email != "" {
-//			u.Profile.Email = uu.Profile.Email
-//		}
-//		return u, nil
-//	}
-//	return nil, errors.New("User Not Exist")
-//}
-//
-//func Login(username, password string) bool {
-//	for _, u := range UserList {
-//		if u.Username == username && u.Password == password {
-//			return true
-//		}
-//	}
-//	return false
-//}
-//
-//func DeleteUser(uid string) {
-//	delete(UserList, uid)
-//}
+func GetAllUsers() ([]*Users, error) {
+	var users []*Users
+	db := orm.NewOrm()
+	if _, err := db.QueryTable("users").All(&users); err != nil {
+		return nil, err
+	} else {
+		return users, nil
+	}
+
+}
+
+func GetOneUser(uid string) (*Users, error) {
+	var user = Users{Id: uid}
+	db := orm.NewOrm()
+	if err := db.Read(&user); err != nil {
+		return nil, err
+	} else {
+		return &user, nil
+	}
+
+}
+
+func UpdateUser(uid string, users Users) (*Users, error) {
+	db := orm.NewOrm()
+	var user = Users{Id: uid}
+	if err := db.Read(&user); err != nil {
+		return nil, err
+	} else {
+		if users.Username != "" {
+			user.Username = users.Username
+		}
+		if users.Age != 0 {
+			user.Age = users.Age
+		}
+		if users.Address != "" {
+			user.Address = users.Address
+		}
+		if users.Phone != "" {
+			user.Phone = users.Phone
+		}
+		if users.Gender != "" {
+			user.Gender = users.Gender
+		}
+		if users.Email != "" {
+			user.Email = users.Email
+		}
+		if _, err := db.Update(&user); err != nil {
+			return nil, err
+		} else {
+			return &user, nil
+
+		}
+	}
+}
+func DeleteUser(uid string) error {
+	db := orm.NewOrm()
+	var user = Users{Id: uid}
+	if _, err := db.Delete(&user); err != nil {
+		return err
+	} else {
+		return nil
+	}
+
+}
