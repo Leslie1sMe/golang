@@ -18,12 +18,12 @@
         15.golang操作http                                  ---http.go
         16.golang操作goroutine添加互斥锁                   
 ### `2.advanced`
-        1.项目实战
-                1）用户信息管理系统
-                2）个人收支记录软件
-                3）golang实现聊天室
-                4) golang实现博客
-                5) golang实现api操作，实现swagger文档输出以及默认model的curd操作
-                6) golang实现golang package 
-                7) golang实现beego api的请求过程及model初始化的过程
-                8) golang实现beego api的验证码登录及自动化Api文档，及单元测试golang package
+        1. 用户信息管理系统
+        2. 个人收支记录软件
+        3. golang实现聊天室
+        4. golang实现博客
+        5. golang实现api操作，实现swagger文档输出以及默认model的curd操作
+        6. golang实现golang package 
+        7. golang实现beego api的请求过程及model初始化的过程
+        8. golang实现beego api的验证码登录及自动化Api文档，及单元测试golang package
+        9. golang实现爬虫，爬取github用户首页项目信息
