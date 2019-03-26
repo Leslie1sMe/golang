@@ -28,9 +28,13 @@
         8. golang实现beego api的验证码登录及自动化Api文档，及单元测试golang package
         9. golang实现爬虫，爬取github用户首页项目信息
         10.golang实现分布式爬虫，爬取zhenai用户信息并插入ELK，kibana展示(仅用于测试，不商用)
-        
-        
-            ![conv_ops](https://github.com/Leslie1sMe/golang/tree/master/test_crawler.gif)
-        
         11.iris使用一二三(todo)
+        
+        
+        
+        
+        
+        
+![conv_ops](https://github.com/Leslie1sMe/golang/blob/master/test_crawler.gif?raw=true)
+        
         
