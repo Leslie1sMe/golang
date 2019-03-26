@@ -1,5 +1,5 @@
 package citys
 
-func ParseCities() {
+func CitiesParser() {
 
 }

@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+	"github.com/Leslie1sMe/ip_pools"
 	"go_code/crawler/model"
 	"io/ioutil"
 	"ip_pools"
+	"ip_pools/agents"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -71,7 +73,7 @@ func getHtml(proxy *url.URL, client *http.Client, webUrl string) (html []byte, e
 	if err != nil {
 		fmt.Println(err)
 	}
-	request.Header.Set("User-Agent", ip_pools.GetAgent())
+	request.Header.Set("User-Agent", agents.GetAgent())
 	request.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
 	request.Header.Set("Connection", "keep-alive")
 	response, err := client.Do(request)

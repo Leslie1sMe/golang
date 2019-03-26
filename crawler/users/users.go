@@ -1,0 +1,5 @@
+package users
+
+func UserListParser() {
+
+}
