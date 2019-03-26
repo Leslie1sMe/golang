@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"go_code/crawler/model"
-	"go_code/ip_pools"
 	"io/ioutil"
+	"ip_pools"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -12,31 +12,21 @@ import (
 )
 
 func main() {
-
+	res, _ := ip_pools.GetPosition()
+	ip_pools.SaveIpToRedis(res)
 	webUrl := "http://www.zhenai.com/zhenghun"
 	proxy, client := ip_pools.SetProxy()
+	ch := make(chan int)
 	html, error := getHtml(proxy, client, webUrl)
 	if error != nil {
 		fmt.Println(error)
 	} else {
 		var num int
-		ch := make(chan int)
-		go func() {
-			//获取城市列表
-			cityList := CityListParser(html)
-			for _, v := range cityList {
-				html, error = getHtml(proxy, client, v)
-				if error != nil {
-					fmt.Println(error)
-					fmt.Printf("切换ip\n", proxy)
-					proxy, client = ip_pools.SetProxy()
-					html, error = getHtml(proxy, client, v)
-					continue
-				}
-				//获取用户列表
-				userList := UserListParser(html)
-				for _, v := range userList {
-					num++
+		for i := 0; i < 100; i++ {
+			go func() {
+				//获取城市列表
+				cityList := CityListParser(html)
+				for _, v := range cityList {
 					html, error = getHtml(proxy, client, v)
 					if error != nil {
 						fmt.Println(error)
@@ -45,19 +35,34 @@ func main() {
 						html, error = getHtml(proxy, client, v)
 						continue
 					}
-					//获取用户信息列表
-					userProfileList := UserProfileParser(num, ch, html)
-					for _, v := range userProfileList {
-						fmt.Println(v)
+					//获取用户列表
+					userList := UserListParser(html)
+					for _, v := range userList {
+						num++
+						html, error = getHtml(proxy, client, v)
+						if error != nil {
+							fmt.Println(error)
+							fmt.Printf("切换ip\n", proxy)
+							proxy, client = ip_pools.SetProxy()
+							html, error = getHtml(proxy, client, v)
+							continue
+						}
+						//获取用户信息列表
+						userProfileList := UserProfileParser(num, ch, html)
+						for _, v := range userProfileList {
+							fmt.Println(v)
+						}
 					}
-
 				}
-			}
-		}()
-		for i := 0; i < 10000; i++ {
-			fmt.Println(<-ch)
+			}()
 		}
+
 	}
+
+	for i := 0; i < 500000; i++ {
+		fmt.Println(<-ch)
+	}
+
 }
 
 func getHtml(proxy *url.URL, client *http.Client, webUrl string) (html []byte, err error) {
@@ -71,10 +76,9 @@ func getHtml(proxy *url.URL, client *http.Client, webUrl string) (html []byte, e
 	request.Header.Set("Connection", "keep-alive")
 	response, err := client.Do(request)
 	if err != nil || response.StatusCode != 200 {
-		fmt.Printf("遇到了错误,并切换ip %s\n", err)
-		proxy, _ := ip_pools.SetProxy()
-		fmt.Println("切换ip成功\n", proxy)
+		return nil, err
 	}
+	defer response.Body.Close()
 	html, error := ioutil.ReadAll(response.Body)
 	if error != nil {
 		return nil, error
