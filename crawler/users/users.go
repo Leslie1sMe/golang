@@ -1,5 +1,0 @@
-package users
-
-func UserListParser() {
-
-}

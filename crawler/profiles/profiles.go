@@ -1,5 +1,0 @@
-package profiles
-
-func ProfileParser() {
-
-}

@@ -1,5 +1,0 @@
-package citys
-
-func CitiesParser() {
-
-}

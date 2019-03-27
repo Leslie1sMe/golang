@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/Leslie1sMe/ip_pools"
 	"go_code/crawler/model"
 	"io/ioutil"
 	"ip_pools"
