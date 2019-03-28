@@ -15,7 +15,7 @@ func GetCitiesList(content []byte) engine.ParseResult {
 		res.Items = append(res.Items, v[2])
 		res.Requests = append(res.Requests, engine.Request{
 			Url:        v[1],
-			ParserFunc: GetUserLists,
+			ParserFunc: GetCitiesPages,
 		})
 	}
 	return res

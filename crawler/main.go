@@ -66,7 +66,7 @@ func main() {
 
 }
 
-func getHtml(proxy *url.URL, client *http.Client, webUrl string) (html []byte, err error) {
+func getHtml(client *http.Client, webUrl string) (html []byte, err error) {
 
 	request, err := http.NewRequest("GET", webUrl, nil)
 	if err != nil {

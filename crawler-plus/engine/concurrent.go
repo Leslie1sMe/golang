@@ -1,23 +1,18 @@
 package engine
 
-type Scheduler interface {
-	Submit(Request)
-	ConfigWorkerChan(chan Request)
-}
-
 //ConcurrentEngine
 type ConcurrentEngine struct {
 	Scheduler   Scheduler
+	Fetcher     Fetcher
 	WorkerCount int
 }
 
 //Run
 func (c *ConcurrentEngine) Run(seed ...Request) {
-	var in = make(chan Request)
 	var out = make(chan ParseResult)
-	c.Scheduler.ConfigWorkerChan(in)
+	c.Scheduler.Begin()
 	for i := 0; i < c.WorkerCount; i++ {
-		CreateWorkers(in, out)
+		CreateWorkers(out, c.Scheduler, c.Fetcher)
 	}
 	for _, request := range seed {
 		c.Scheduler.Submit(request)
@@ -32,11 +27,13 @@ func (c *ConcurrentEngine) Run(seed ...Request) {
 }
 
 //CreateWorkers
-func CreateWorkers(in chan Request, out chan ParseResult) {
+func CreateWorkers(out chan ParseResult, s Scheduler, f Fetcher) {
+	in := make(chan Request)
 	go func() {
 		for {
+			s.WorkChanFree(in)
 			requests := <-in
-			result, err := Worker(requests)
+			result, err := f.Work(requests)
 			if err != nil {
 				continue
 			}
