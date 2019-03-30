@@ -1,10 +1,13 @@
 package main
 
 import (
+	"github.com/olivere/elastic"
 	"go_code/crawler-plus/engine"
 	"go_code/crawler-plus/fetcher"
 	"go_code/crawler-plus/parsers"
 	"go_code/crawler-plus/scheduler"
+	"go_code/crawler-plus/writer"
+	"log"
 )
 
 func main() {
@@ -12,9 +15,14 @@ func main() {
 		Url:        "http://www.zhenai.com/zhenghun",
 		ParserFunc: parsers.GetCitiesList,
 	}
+	elkClient, err := elastic.NewClient(elastic.SetSniff(false))
+	if err != nil {
+		log.Fatal(err)
+	}
 	e := engine.ConcurrentEngine{
 		Scheduler:   &scheduler.QueuedScheduler{},
-		Fetcher:     fetcher.ForgedFetcher{},
+		Fetcher:     &fetcher.ForgedFetcher{},
+		Writer:      &writer.ElkWriter{Client: elkClient},
 		WorkerCount: 100,
 	}
 	e.Run(requests)

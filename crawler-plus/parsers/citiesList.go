@@ -12,7 +12,6 @@ func GetCitiesList(content []byte) engine.ParseResult {
 	cities := re.FindAllStringSubmatch(string(content), -1)
 	var res = engine.ParseResult{}
 	for _, v := range cities {
-		res.Items = append(res.Items, v[2])
 		res.Requests = append(res.Requests, engine.Request{
 			Url:        v[1],
 			ParserFunc: GetCitiesPages,

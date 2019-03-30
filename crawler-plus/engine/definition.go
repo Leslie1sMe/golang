@@ -26,3 +26,8 @@ type Fetcher interface {
 	Work(Request) (ParseResult, error)
 	GetProxy() (string, error)
 }
+
+//Writer
+type Writer interface {
+	Write(interface{}, string, string) error
+}

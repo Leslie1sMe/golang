@@ -17,7 +17,7 @@ var client = http.Client{}
 type ForgedFetcher struct {
 }
 
-func (f ForgedFetcher) GetProxy() (string, error) {
+func (f *ForgedFetcher) GetProxy() (string, error) {
 	if res, err := RedisClient.Spop("ip_pools"); err != nil {
 		return "", err
 	} else {
@@ -25,7 +25,7 @@ func (f ForgedFetcher) GetProxy() (string, error) {
 	}
 }
 
-func (f ForgedFetcher) Fetch(weburl string) (html []byte, error error) {
+func (f *ForgedFetcher) Fetch(weburl string) (html []byte, error error) {
 	request, err := http.NewRequest("GET", weburl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -64,7 +64,7 @@ func (f ForgedFetcher) Fetch(weburl string) (html []byte, error error) {
 	return html, nil
 }
 
-func (f ForgedFetcher) Work(request engine.Request) (engine.ParseResult, error) {
+func (f *ForgedFetcher) Work(request engine.Request) (engine.ParseResult, error) {
 	content, err := f.Fetch(request.Url)
 	if err != nil {
 		return engine.ParseResult{}, err

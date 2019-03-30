@@ -13,7 +13,6 @@ func GetUserLists(content []byte) engine.ParseResult {
 	users := reg.FindAllStringSubmatch(string(content), -1)
 	for _, v := range users {
 		name := v[2]
-		res.Items = append(res.Items, name)
 		res.Requests = append(res.Requests, engine.Request{
 			Url: v[1],
 			ParserFunc: func(content []byte) engine.ParseResult {

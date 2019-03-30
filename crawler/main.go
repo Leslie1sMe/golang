@@ -7,7 +7,6 @@ import (
 	"ip_pools"
 	"ip_pools/agents"
 	"net/http"
-	"net/url"
 	"regexp"
 	"strings"
 )

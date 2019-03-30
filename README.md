@@ -28,8 +28,9 @@
         7. golang实现beego api的请求过程及model初始化的过程
         8. golang实现beego api的验证码登录及自动化Api文档，及单元测试golang package
         9. golang实现爬虫，爬取github用户首页项目信息
-        10.golang实现分布式爬虫，爬取zhenai用户信息并插入ELK，kibana展示(仅用于测试，不商用)
-          
+        10.golang爬取zhenai用户信息并插入ELK，kibana展示(仅用于测试，不商用)
+        11.golang爬虫，模块DataSaveService，FetchDataService使用RPC实现分布式
+        12.golang爬虫，使用zookeeper实现服务注册和发现  
    [爬虫效果展示](https://github.com/Leslie1sMe/golang/blob/master/test_crawler.gif)
         
         11.iris使用一二三(todo)

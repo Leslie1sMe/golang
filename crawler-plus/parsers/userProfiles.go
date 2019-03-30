@@ -2,7 +2,6 @@ package parsers
 
 import (
 	"fmt"
-	"go_code/crawler-plus/elkWriter"
 	"go_code/crawler-plus/engine"
 	"go_code/crawler-plus/model"
 	"regexp"
@@ -10,6 +9,7 @@ import (
 
 const compile = `<div class="m-btn purple" data-v-bff6f798>([^>]+[^>]+)</div>`
 
+//GetUserProfile
 func GetUserProfile(content []byte, name string) engine.ParseResult {
 	var res engine.ParseResult
 	compileReg := regexp.MustCompile(compile)
@@ -37,14 +37,8 @@ func GetUserProfile(content []byte, name string) engine.ParseResult {
 			userProfile.DegreeOfEducation = string(v[1])
 		default:
 			fmt.Println("信息不全")
-
 		}
 	}
-	resp, err := elkWriter.Write(userProfile)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(resp)
 	res.Items = append(res.Items, userProfile)
 	return res
 }
