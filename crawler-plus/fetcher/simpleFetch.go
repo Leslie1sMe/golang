@@ -1,16 +1,18 @@
 package fetcher
 
 import (
+	"github.com/monnand/goredis"
 	"go_code/crawler-plus/engine"
 	"io/ioutil"
 	"net/http"
 )
 
 type SimpleFetch struct {
+	client goredis.Client
 }
 
 func (s SimpleFetch) GetProxy() (string, error) {
-	if res, err := RedisClient.Spop("ip_pools"); err != nil {
+	if res, err := s.client.Spop("ip_pools"); err != nil {
 		return "", err
 	} else {
 		return string(res), nil

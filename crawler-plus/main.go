@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/monnand/goredis"
 	"github.com/olivere/elastic"
 	"go_code/crawler-plus/engine"
 	"go_code/crawler-plus/fetcher"
@@ -19,9 +20,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	redisClient := &goredis.Client{Addr: ":6379", Db: 1}
 	e := engine.ConcurrentEngine{
 		Scheduler:   &scheduler.QueuedScheduler{},
-		Fetcher:     &fetcher.ForgedFetcher{},
+		Fetcher:     &fetcher.ForgedFetcher{Client: redisClient},
 		Writer:      &writer.ElkWriter{Client: elkClient},
 		WorkerCount: 100,
 	}

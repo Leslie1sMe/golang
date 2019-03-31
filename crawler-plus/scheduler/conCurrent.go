@@ -9,7 +9,7 @@ type QueuedScheduler struct {
 }
 
 func (q *QueuedScheduler) ConfigWorkerChan(request chan engine.Request) {
-	panic("implement me")
+
 }
 
 //Submit

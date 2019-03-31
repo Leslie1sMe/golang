@@ -1,14 +1,14 @@
 package engine
 
-import "fmt"
+import "go_code/crawler-rpc/writeService/client"
 
 //ConcurrentEngine
 //开启并发爬虫采集器
 type ConcurrentEngine struct {
 	Scheduler   Scheduler
 	Fetcher     Fetcher
-	Writer      Writer
 	WorkerCount int
+	Writer      Writer
 }
 
 //Run
@@ -21,13 +21,13 @@ func (c *ConcurrentEngine) Run(seeds ...Request) {
 	for _, request := range seeds {
 		c.Scheduler.Submit(request)
 	}
+	dataCount := 0
 	for {
 		result := <-out
 		for _, item := range result.Items {
-			err := c.Writer.Write(item, "true_love", "profile")
-			if err == nil {
-				fmt.Println("插入成功")
-			}
+			dataCount++
+			//c.Writer.Write(item, "zhenaiwang", "profiles")
+			rpc_client.Write(":9002", item)
 		}
 		for _, request := range result.Requests {
 			c.Scheduler.Submit(request)

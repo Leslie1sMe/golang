@@ -11,11 +11,12 @@ type ElkWriter struct {
 }
 
 //Write
-func (e *ElkWriter) Write(item interface{}, index string, elasticType string) error {
-	_, err := e.Client.Index().Index(index).Type(elasticType).BodyJson(item).Do(context.Background())
+func (e *ElkWriter) Write(item interface{}, args ...string) error {
+	resp, err := e.Client.Index().Index(args[0]).Type(args[1]).BodyJson(item).Do(context.Background())
 	if err != nil {
 		fmt.Println(err)
 		return err
 	}
+	fmt.Println(resp)
 	return nil
 }

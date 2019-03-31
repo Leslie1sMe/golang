@@ -29,5 +29,5 @@ type Fetcher interface {
 
 //Writer
 type Writer interface {
-	Write(interface{}, string, string) error
+	Write(interface{}, ...string) error
 }

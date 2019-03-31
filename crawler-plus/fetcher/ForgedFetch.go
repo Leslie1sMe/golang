@@ -11,14 +11,14 @@ import (
 	"time"
 )
 
-var RedisClient = goredis.Client{Addr: "127.0.0.1:6379", Db: 1}
 var client = http.Client{}
 
 type ForgedFetcher struct {
+	Client goredis.Client
 }
 
 func (f *ForgedFetcher) GetProxy() (string, error) {
-	if res, err := RedisClient.Spop("ip_pools"); err != nil {
+	if res, err := f.Client.Spop("ip_pools"); err != nil {
 		return "", err
 	} else {
 		return string(res), nil
