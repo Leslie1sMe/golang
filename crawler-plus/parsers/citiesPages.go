@@ -1,6 +1,7 @@
 package parsers
 
 import (
+	"fmt"
 	"go_code/crawler-plus/engine"
 	"regexp"
 )
@@ -12,6 +13,7 @@ func GetCitiesPages(content []byte) engine.ParseResult {
 	cities := re.FindAllStringSubmatch(string(content), -1)
 	var res = engine.ParseResult{}
 	for _, v := range cities {
+		fmt.Printf("正在爬取%s\n", v[2])
 		res.Requests = append(res.Requests, engine.Request{
 			Url:        v[2],
 			ParserFunc: GetUserLists,

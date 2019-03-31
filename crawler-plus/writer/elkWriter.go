@@ -4,19 +4,28 @@ import (
 	"context"
 	"fmt"
 	"github.com/olivere/elastic"
+	"log"
 )
 
 type ElkWriter struct {
-	Client *elastic.Client
 }
 
-//Write
-func (e *ElkWriter) Write(item interface{}, args ...string) error {
-	resp, err := e.Client.Index().Index(args[0]).Type(args[1]).BodyJson(item).Do(context.Background())
+func (e ElkWriter) Write(args ...string) chan interface{} {
+	dataChan := make(chan interface{})
+
+	client, err := elastic.NewClient(elastic.SetSniff(false))
 	if err != nil {
-		fmt.Println(err)
-		return err
+		log.Fatal(err)
 	}
-	fmt.Println(resp)
-	return nil
+	go func() {
+		for {
+			item := <-dataChan
+			resp, err := client.Index().Index(args[0]).Type(args[1]).BodyJson(item).Do(context.Background())
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println(resp)
+		}
+	}()
+	return dataChan
 }

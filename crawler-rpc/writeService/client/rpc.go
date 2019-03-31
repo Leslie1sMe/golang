@@ -11,7 +11,7 @@ func Write(host string, item interface{}) {
 		fmt.Println(err)
 	}
 	res := new(string)
-	err = client.Call("WriteService.RpcWriter", item, *res)
+	err = client.Call("WriteService.RpcWriter", item, &res)
 	if err != nil {
 		fmt.Println(err)
 	}

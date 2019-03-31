@@ -28,6 +28,12 @@ type Fetcher interface {
 }
 
 //Writer
-type Writer interface {
-	Write(interface{}, ...string) error
+type Saver interface {
+	Write(...string) chan interface{}
+}
+
+//WriteWorker
+type WriteWorker struct {
+	Payload chan interface{}
+	Storage Saver
 }

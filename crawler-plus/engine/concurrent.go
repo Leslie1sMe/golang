@@ -1,14 +1,12 @@
 package engine
 
-import "go_code/crawler-rpc/writeService/client"
-
 //ConcurrentEngine
 //开启并发爬虫采集器
 type ConcurrentEngine struct {
 	Scheduler   Scheduler
 	Fetcher     Fetcher
 	WorkerCount int
-	Writer      Writer
+	Writer      WriteWorker
 }
 
 //Run
@@ -21,13 +19,10 @@ func (c *ConcurrentEngine) Run(seeds ...Request) {
 	for _, request := range seeds {
 		c.Scheduler.Submit(request)
 	}
-	dataCount := 0
 	for {
 		result := <-out
 		for _, item := range result.Items {
-			dataCount++
-			//c.Writer.Write(item, "zhenaiwang", "profiles")
-			rpc_client.Write(":9002", item)
+			go func() { c.Writer.Payload <- item }()
 		}
 		for _, request := range result.Requests {
 			c.Scheduler.Submit(request)

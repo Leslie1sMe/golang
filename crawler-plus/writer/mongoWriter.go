@@ -11,18 +11,24 @@ import (
 type MongoDbWriter struct {
 }
 
-func (m MongoDbWriter) Write(item interface{}, args ...string) error {
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
-	if err != nil {
-		return err
-	}
-	collection := client.Database(args[0]).Collection(args[1])
-	res, err := collection.InsertOne(ctx, item)
-	if err != nil {
-		return err
-	}
-	id := res.InsertedID
-	fmt.Println(id)
-	return nil
+func (m MongoDbWriter) Write(args ...string) chan interface{} {
+	dataChan := make(chan interface{})
+	go func() {
+		ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+		client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
+		if err != nil {
+			panic(err)
+		}
+		collection := client.Database(args[0]).Collection(args[1])
+		for {
+			item := <-dataChan
+			res, err := collection.InsertOne(ctx, item)
+			if err != nil {
+				fmt.Println(err)
+			}
+			id := res.InsertedID
+			fmt.Println(id)
+		}
+	}()
+	return dataChan
 }

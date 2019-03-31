@@ -11,20 +11,22 @@ import (
 	"time"
 )
 
-var client = http.Client{}
-
 type ForgedFetcher struct {
-	Client goredis.Client
 }
 
+var redis = goredis.Client{Addr: ":6379", Db: 1}
+var client = http.Client{}
+
+//GetProxy
 func (f *ForgedFetcher) GetProxy() (string, error) {
-	if res, err := f.Client.Spop("ip_pools"); err != nil {
+	if res, err := redis.Spop("ip_pools"); err != nil {
 		return "", err
 	} else {
 		return string(res), nil
 	}
 }
 
+//Fetch
 func (f *ForgedFetcher) Fetch(weburl string) (html []byte, error error) {
 	request, err := http.NewRequest("GET", weburl, nil)
 	if err != nil {
@@ -64,6 +66,7 @@ func (f *ForgedFetcher) Fetch(weburl string) (html []byte, error error) {
 	return html, nil
 }
 
+//Work
 func (f *ForgedFetcher) Work(request engine.Request) (engine.ParseResult, error) {
 	content, err := f.Fetch(request.Url)
 	if err != nil {
@@ -72,6 +75,7 @@ func (f *ForgedFetcher) Work(request engine.Request) (engine.ParseResult, error)
 	return request.ParserFunc(content), nil
 }
 
+//NewClient
 func NewClient(proxy *url.URL) (client http.Client) {
 	client = http.Client{
 		Transport: &http.Transport{
