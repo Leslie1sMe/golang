@@ -6,7 +6,8 @@ import (
 	"go_code/crawler-plus/fetcher"
 	"go_code/crawler-plus/parsers"
 	"go_code/crawler-plus/scheduler"
-	"go_code/crawler-plus/writer"
+	"go_code/crawler-rpc/writeService"
+	"go_code/crawler-rpc/writeService/client"
 )
 
 func main() {
@@ -15,13 +16,13 @@ func main() {
 		ParserFunc: parsers.GetCitiesList,
 	}
 
-	dataChan := writer.MongoDbWriter{}.Write("lzl", "profile") //?待优化
+	dataChan := writeService.Write(":9002")
 	e := engine.ConcurrentEngine{
 		Scheduler: &scheduler.QueuedScheduler{},
 		Fetcher:   &fetcher.ForgedFetcher{}, //两种爬取方式，支持简单和并发爬取
 		Writer: engine.WriteWorker{
-			Payload: dataChan,             //将要存取的数据放入channel,解耦分离给存储模块存储
-			Storage: writer.RedisWriter{}, //三种写入方式支持mongodb，redis，elastic Api
+			Payload:  dataChan, //将要存取的数据放入channel,解耦分离给存储模块存储
+			RpcSaver: &writeServiceRpc.WriteServiceRpc{},
 		},
 		WorkerCount: 100,
 	}

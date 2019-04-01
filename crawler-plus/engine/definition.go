@@ -34,6 +34,12 @@ type Saver interface {
 
 //WriteWorker
 type WriteWorker struct {
-	Payload chan interface{}
-	Storage Saver
+	Payload  chan interface{}
+	Storage  Saver
+	RpcSaver RpcSaver
+}
+
+//RpcSaver
+type RpcSaver interface {
+	RpcWrite(interface{}, *string) error
 }

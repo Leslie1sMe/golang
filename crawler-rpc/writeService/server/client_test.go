@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go_code/crawler-rpc/rpc-drive/client"
+	"go_code/crawler-rpc/rpc-drive"
 	"go_code/crawler/model"
 	"testing"
 )

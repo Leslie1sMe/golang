@@ -6,6 +6,7 @@ import (
 	"net/rpc/jsonrpc"
 )
 
+//RpcServer
 func RpcServer(host string, service interface{}) error {
 	rpc.Register(service)
 	listener, err := net.Listen("tcp", host)
@@ -19,4 +20,13 @@ func RpcServer(host string, service interface{}) error {
 		}
 		jsonrpc.ServeConn(conn)
 	}
+}
+
+//NewRpcClient
+func NewRpcClient(host string) (*rpc.Client, error) {
+	conn, err := net.Dial("tcp", host)
+	if err != nil {
+		return nil, err
+	}
+	return jsonrpc.NewClient(conn), nil
 }

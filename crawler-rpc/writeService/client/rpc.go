@@ -1,18 +1,24 @@
-package rpc_client
+package writeServiceRpc
 
 import (
+	"context"
 	"fmt"
-	"go_code/crawler-rpc/rpc-drive/client"
+	"github.com/olivere/elastic"
 )
 
-func Write(host string, item interface{}) {
-	client, err := rpc_drive.NewRpcClient(host)
+type WriteServiceRpc struct {
+	Index  string
+	Type   string
+	Client *elastic.Client
+}
+
+func (w *WriteServiceRpc) RpcWrite(item interface{}, reply *string) error {
+	resp, err := w.Client.Index().Index(w.Index).Type(w.Type).BodyJson(item).Do(context.Background())
 	if err != nil {
 		fmt.Println(err)
+		return err
 	}
-	res := new(string)
-	err = client.Call("WriteService.RpcWriter", item, &res)
-	if err != nil {
-		fmt.Println(err)
-	}
+	fmt.Println(resp)
+	*reply = "ok"
+	return nil
 }
