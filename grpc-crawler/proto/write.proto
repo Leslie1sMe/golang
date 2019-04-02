@@ -1,0 +1,38 @@
+syntax = "proto3";
+package proto; // 指定生成的 write.pb.go 的包名，防止命名冲突
+
+// service 定义开放调用的服务，即 WriteService 微服务
+service WriteService {
+    // rpc 定义服务内的 GrpcWrite 远程调用
+    rpc GrpcWrite (ClientRequest) returns (ClientResponse) {
+    }
+}
+
+/*
+/ message 对应生成代码的 struct
+/ 定义客户端请求的数据格式
+*/
+message ClientRequest {
+    Profile item = 1;
+    string index = 2;
+    string elkType = 3;
+}
+
+message Profile {
+    string Name = 1;
+    string Province = 2;
+    string Age = 3;
+    string Constellation = 4;
+    string MarriedOrNot = 5;
+    string Height = 6;
+    string Profession = 7;
+    string Weight = 8;
+    string WorkPlace = 9;
+    string Income = 10;
+    string DegreeOfEducation = 11;
+}
+
+// 定义服务端响应的数据格式
+message ClientResponse {
+    string reply = 1;
+}

@@ -15,7 +15,7 @@ func Write(host string) chan interface{} {
 	go func() {
 		for {
 			item := <-dataChan
-			err = client.Call("WriteServiceRpc.Write", item, &reply)
+			err = client.Call("WriteServiceRpc.RpcWrite", item, &reply)
 			if err != nil {
 				fmt.Println(err)
 			}

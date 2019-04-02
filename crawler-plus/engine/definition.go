@@ -1,5 +1,7 @@
 package engine
 
+import pb "grpc-crawler/proto"
+
 //Request
 type Request struct {
 	Url        string
@@ -9,7 +11,7 @@ type Request struct {
 //ParseResult
 type ParseResult struct {
 	Requests []Request
-	Items    []interface{}
+	Items    []pb.Profile
 }
 
 //Scheduler
@@ -34,12 +36,18 @@ type Saver interface {
 
 //WriteWorker
 type WriteWorker struct {
-	Payload  chan interface{}
+	Payload  chan pb.Profile
 	Storage  Saver
 	RpcSaver RpcSaver
+	GSaver   GSaver
 }
 
 //RpcSaver
 type RpcSaver interface {
 	RpcWrite(interface{}, *string) error
+}
+
+//GrpcSaver
+type GSaver interface {
+	GrpcWrite(host string) chan pb.Profile
 }

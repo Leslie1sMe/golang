@@ -3,7 +3,7 @@ package parsers
 import (
 	"fmt"
 	"go_code/crawler-plus/engine"
-	"go_code/crawler-plus/model"
+	pb "grpc-crawler/proto"
 	"regexp"
 )
 
@@ -14,7 +14,7 @@ func GetUserProfile(content []byte, name string) engine.ParseResult {
 	var res engine.ParseResult
 	compileReg := regexp.MustCompile(compile)
 	compileResult := compileReg.FindAllSubmatch(content, -1)
-	userProfile := model.Profile{Name: name}
+	userProfile := pb.Profile{Name: name}
 	for index, v := range compileResult {
 		switch index {
 		case 0:
