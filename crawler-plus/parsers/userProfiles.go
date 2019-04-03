@@ -3,7 +3,7 @@ package parsers
 import (
 	"fmt"
 	"go_code/crawler-plus/engine"
-	pb "grpc-crawler/proto"
+	pb "go_code/grpc-crawler/proto"
 	"regexp"
 )
 

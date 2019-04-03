@@ -1,6 +1,6 @@
 package engine
 
-import pb "grpc-crawler/proto"
+import pb "go_code/grpc-crawler/proto"
 
 //Request
 type Request struct {
@@ -40,6 +40,7 @@ type WriteWorker struct {
 	Storage  Saver
 	RpcSaver RpcSaver
 	GSaver   GSaver
+	EtcdSave EtcdSave
 }
 
 //RpcSaver
@@ -50,4 +51,8 @@ type RpcSaver interface {
 //GrpcSaver
 type GSaver interface {
 	GrpcWrite(host string) chan pb.Profile
+}
+
+type EtcdSave interface {
+	EtcdWrite(host, name string, endpoint []string) chan pb.Profile
 }

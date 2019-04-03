@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"go_code/grpc-crawler/etcd"
+	"go_code/grpc-crawler/grpc-support"
+	pb "go_code/grpc-crawler/proto"
 	"golang.org/x/net/context"
-	"grpc-crawler/grpc-support"
-	pb "grpc-crawler/proto"
 )
 
 type WriteService struct {
@@ -22,8 +23,10 @@ func (w *WriteService) GrpcWrite(ctx context.Context, req *pb.ClientRequest) (re
 }
 
 func main() {
-	port := ":9002"
-	l, s := grpc_support.GrpcServer(port)
+
+	port := "http://127.0.0.1:2379"
+	etcd.RegisterEtcdService([]string{port})
+	l, s := grpc_support.GrpcServer("127.0.0.1:2379")
 	var u = &WriteService{}
 	pb.RegisterWriteServiceServer(s, u)
 	s.Serve(l)
